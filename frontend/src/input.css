@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #F8FAFC;
+  --color-foreground: #1E293B;
+  --color-primary: #1E40AF;
+  --color-secondary: #2563EB;
+  --color-border: #E2E8F0;
+  --color-muted: #F1F5F9;
+  --color-accent: #059669;
+  --color-destructive: #DC2626;
+  --color-stepper-active: #2563EB;
+  --color-stepper-complete: #059669;
+  --color-stepper-pending: #CBD5E1;
+  --font-body: 'Open Sans', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --radius-card: 1rem;
+  --radius-btn: 0.5rem;
+  --radius-pill: 9999px;
+  --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 10px 24px -6px rgba(0,0,0,0.08), 0 4px 8px -4px rgba(0,0,0,0.04);
+  --shadow-dropzone: 0 4px 12px rgba(37,99,235,0.08);
+}

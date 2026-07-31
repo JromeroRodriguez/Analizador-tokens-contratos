@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analizador de Tokens de Contratos</title>
+  <link rel="stylesheet" href="dist/tailwind.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-surface font-body text-foreground min-h-screen">
+
+  <header class="bg-gradient-to-r from-primary to-[#1E3A8A] text-white">
+    <div class="max-w-5xl mx-auto px-4 py-6 md:py-8">
+      <div class="flex items-center gap-3 mb-1">
+        <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-heading text-xl md:text-2xl font-bold">Analizador de Tokens de Contratos</h1>
+          <p class="text-blue-200 text-xs md:text-sm">Sub&iacute; un contrato de alquiler en PDF para analizar consumo de tokens, costos y ahorro con compresi&oacute;n IA.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="app" class="max-w-5xl mx-auto px-4 py-6 md:py-8">
+
+    <div id="stepper" class="hidden mb-8" role="navigation" aria-label="Progreso del an&aacute;lisis">
+      <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm border border-border">
+        <ol class="flex items-center justify-between">
+          <li class="stepper-item" data-step="1">
+            <span class="stepper-number" aria-hidden="true"><span>1</span></span>
+            <span class="stepper-label">Subir PDF</span>
+          </li>
+          <li class="stepper-connector" aria-hidden="true"></li>
+          <li class="stepper-item" data-step="2">
+            <span class="stepper-number" aria-hidden="true"><span>2</span></span>
+            <span class="stepper-label">Informaci&oacute;n</span>
+          </li>
+          <li class="stepper-connector" aria-hidden="true"></li>
+          <li class="stepper-item" data-step="3">
+            <span class="stepper-number" aria-hidden="true"><span>3</span></span>
+            <span class="stepper-label">Modo</span>
+          </li>
+          <li class="stepper-connector" aria-hidden="true"></li>
+          <li class="stepper-item" data-step="4">
+            <span class="stepper-number" aria-hidden="true"><span>4</span></span>
+            <span class="stepper-label">Comparaci&oacute;n</span>
+          </li>
+          <li class="stepper-connector" aria-hidden="true"></li>
+          <li class="stepper-item" data-step="5">
+            <span class="stepper-number" aria-hidden="true"><span>5</span></span>
+            <span class="stepper-label">Costos</span>
+          </li>
+          <li class="stepper-connector" aria-hidden="true"></li>
+          <li class="stepper-item" data-step="6">
+            <span class="stepper-number" aria-hidden="true"><span>6</span></span>
+            <span class="stepper-label">Resumen</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="upload-section" class="mb-8">
+      <div id="drop-zone"
+           class="drop-zone bg-white border-2 border-dashed border-border rounded-2xl p-10 md:p-14 text-center cursor-pointer transition-all duration-200 hover:border-secondary hover:bg-blue-50/40 shadow-sm"
+           role="button" tabindex="0" aria-label="Subir archivo PDF">
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center drop-zone-icon">
+            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+            </svg>
+          </div>
+          <p class="font-heading font-semibold text-primary text-lg">Arrastr&aacute; tu PDF aqu&iacute;</p>
+          <p class="text-gray-400 text-sm">o <span class="text-secondary underline cursor-pointer font-medium">seleccion&aacute; un archivo</span></p>
+          <p class="text-gray-300 text-xs">M&aacute;x. 10 MB &middot; Solo PDF</p>
+        </div>
+        <input id="file-input" type="file" accept=".pdf" class="hidden" aria-label="Seleccionar archivo PDF">
+      </div>
+      <div id="file-info" class="hidden mt-3 flex items-center gap-2 text-sm text-gray-500"></div>
+
+      <div id="mode-selector" class="mt-6 bg-white border border-border rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm" role="group" aria-label="Modo de an&aacute;lisis">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-primary text-sm">Modo de An&aacute;lisis</h3>
+            <p class="text-xs text-gray-500">Compar&aacute; el costo del contrato original vs el resumen comprimido con IA.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 bg-muted p-1 rounded-lg">
+          <button id="btn-mode-a" class="mode-btn active px-4 py-2 text-xs font-semibold rounded-md bg-white text-primary shadow-sm" aria-pressed="true">
+            A: Contrato Completo
+          </button>
+          <button id="btn-mode-b" class="mode-btn px-4 py-2 text-xs font-semibold rounded-md text-gray-600 hover:text-primary" aria-pressed="false">
+            B: Resumen IA
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="progress-section" class="hidden mb-8">
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-border">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p id="progress-text" class="font-medium text-primary progress-pulse">Procesando documento...</p>
+        </div>
+        <div class="w-full bg-muted rounded-full h-2 overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-secondary to-primary rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p id="progress-step" class="text-xs text-gray-400 mt-2">Extrayendo texto</p>
+      </div>
+    </div>
+
+    <div id="error-section" class="hidden mb-8" role="alert">
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+        <svg class="w-5 h-5 text-destructive shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+        </svg>
+        <div class="flex-1">
+          <p class="font-semibold text-destructive text-sm">Error</p>
+          <p id="error-message" class="text-red-700 text-sm mt-1"></p>
+        </div>
+        <button id="dismiss-error" class="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-red-400 rounded" aria-label="Cerrar mensaje de error">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="results-section" class="hidden space-y-6" role="region" aria-label="Resultados del an&aacute;lisis"></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
